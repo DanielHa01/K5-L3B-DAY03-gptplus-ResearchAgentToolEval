@@ -1,7 +1,108 @@
 {
   "dataset_id": "day03_v2_research_group",
   "dataset_role": "group",
-  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "description": "10 eval case do nhóm tự viết: 5 single turn và 5 multi turn, tập trung vào routing chuyên biệt, đối tượng còn thiếu, và giữ/cập nhật ngữ cảnh hội thoại.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_arxiv_research_routing",
+      "phase": "B",
+      "query": "Tìm giúp mình các paper arXiv gần đây về retrieval-augmented generation, tối đa 3 kết quả.",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "papers", "args": {"max_results": 3}}]},
+      "metadata": {"what_it_tests": "Yêu cầu tìm paper khoa học trên arXiv phải dùng papers, không dùng tìm web hoặc social; lấy đúng giới hạn kết quả."}
+    },
+    {
+      "id": "G02_internal_policy_routing",
+      "phase": "B",
+      "query": "Theo chính sách nội bộ, mình có được đưa dữ liệu cá nhân của khách hàng vào prompt cho dịch vụ AI bên ngoài không?",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "policy", "args": {"policy_area": "data_privacy"}}]},
+      "metadata": {"what_it_tests": "Câu hỏi về quy định nội bộ phải tra policy_area=data_privacy, không suy đoán hay tra web công khai."}
+    },
+    {
+      "id": "G03_social_top_posts",
+      "phase": "B",
+      "query": "Tìm 4 tweet được tương tác nhiều nhất về open-source LLM trên X.",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "open-source LLM", "search_type": "Top", "limit": 4}}]},
+      "metadata": {"what_it_tests": "Chủ đề trên mạng xã hội dùng social_search; 'tương tác nhiều nhất' ánh xạ Top và trích đúng limit=4."}
+    },
+    {
+      "id": "G04_missing_social_subject",
+      "phase": "B",
+      "query": "Tìm các tweet mới nhất của tài khoản đó giúp mình.",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {"what_it_tests": "Không có tài khoản trong yêu cầu hay ngữ cảnh thì hỏi lại, không tự bịa screenname."}
+    },
+    {
+      "id": "G05_no_unrequested_send",
+      "phase": "B",
+      "query": "Soạn một bản tin ngắn về AI hôm nay để mình đọc.",
+      "failure_type": "unnecessary_tool",
+      "expect": {"no_tool": true, "behavior": "answer_without_tool"},
+      "metadata": {"what_it_tests": "Người dùng chỉ muốn soạn nội dung để đọc, không yêu cầu gửi hay đăng; không gọi send hoặc xin xác nhận gửi."}
+    },
+    {
+      "id": "G06_multiturn_account_correction",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Lấy 8 bài đăng mới nhất của tài khoản OpenAI trên X."},
+        {"role": "user", "content": "Mình muốn tài khoản Anthropic thay vào đó."},
+        {"role": "user", "content": "Giữ số lượng 8 bài nhé."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "AnthropicAI", "limit": 8}}]},
+      "metadata": {"what_it_tests": "Qua nhiều lượt phải thay account OpenAI bằng AnthropicAI theo correction mới nhất, đồng thời giữ limit=8."}
+    },
+    {
+      "id": "G07_multiturn_clarify_then_fetch",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt bài báo này giúp mình."},
+        {"role": "user", "content": "Đây là link: https://www.theverge.com/ai-artificial-intelligence"},
+        {"role": "user", "content": "Đọc đúng trang đó thôi."}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "fetch", "args": {"url": "https://www.theverge.com/ai-artificial-intelligence"}}]},
+      "metadata": {"what_it_tests": "Sau khi URL được cung cấp ở lượt trước, dùng fetch với đúng URL; không hỏi lại hoặc chuyển sang tìm kiếm web."}
+    },
+    {
+      "id": "G08_multiturn_source_switch_to_news",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tweet về quy định AI mới ở châu Âu."},
+        {"role": "user", "content": "Đổi sang tin tức trên web, không tìm tweet nữa."},
+        {"role": "user", "content": "Chỉ lấy tin trong tháng này về EU AI Act."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "EU AI Act", "topic": "news", "timeframe": "month"}}]},
+      "metadata": {"what_it_tests": "Tôn trọng đổi nguồn ở lượt sau cùng: dùng lookup news với timeframe=month, không còn social_search."}
+    },
+    {
+      "id": "G09_multiturn_send_requires_confirmation",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Gửi bản tin này lên Telegram giúp mình."},
+        {"role": "user", "content": "Nội dung là: AI có nhiều cập nhật mới hôm nay. Đích gửi là kênh lab-news."},
+        {"role": "user", "content": "Đó là toàn bộ nội dung và đúng kênh mình muốn."}
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "yes_no"}}]},
+      "metadata": {"what_it_tests": "Cung cấp nội dung và đích gửi không đồng nghĩa xác nhận gửi; phải hỏi yes/no trước khi gọi send."}
+    },
+    {
+      "id": "G10_multiturn_paper_search_to_text",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm paper arXiv về mechanistic interpretability."},
+        {"role": "user", "content": "Paper mình muốn đọc có ID 2303.06374."},
+        {"role": "user", "content": "Lấy nội dung text của paper đó, tối đa 4 trang."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "paper_text", "args": {"arxiv_url": "2303.06374", "max_pages": 4}}]},
+      "metadata": {"what_it_tests": "Sau khi người dùng xác định paper ở hội thoại, yêu cầu trích nội dung dùng paper_text với đúng ID và max_pages=4, không tìm paper lại."}
+    }
+  ]
 }
