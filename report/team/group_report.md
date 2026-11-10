@@ -24,7 +24,7 @@ Chạy từ thư mục `starter_v0/`: `streamlit run app.py`. Dependency `stream
 
 **Link dùng thử (deploy):**
 
-Chưa tìm thấy URL deploy hoặc tunnel trong repo. **Cần nhóm cung cấp URL nếu đã deploy.**
+Theo báo cáo cá nhân của Nguyễn Ngọc Bách, giao diện đã được triển khai bằng Cloudflare và có thử chat với hội thoại thật. Tuy nhiên, repo hiện chưa có URL deploy/tunnel hoặc transcript live để người đọc kiểm chứng; cần bổ sung các bằng chứng này nếu có.
 
 ### A2. Tool agent có
 
@@ -163,7 +163,12 @@ Nhóm xác nhận **chưa thực hiện** Small Local Model Challenge; không c�
 
 ## 6. Tổng hợp đóng góp
 
-
+| Thành viên | Phần việc và đóng góp | Bằng chứng |
+|---|---|---|
+| Trương Anh Đức (2A202604096) | Thu thập, đối chiếu báo cáo từng thành viên; tổng hợp tiến trình, kết quả, phân tích lỗi và bằng chứng để hoàn thiện báo cáo nhóm. | [Báo cáo cá nhân](2A202604096_TruongAnhDuc.md), báo cáo này và các báo cáo thành viên trong thư mục. |
+| Nguyễn Ngọc Bách (2A202604108) | Step 5; tạo giao diện chat, báo cáo triển khai Cloudflare và thử nghiệm với hội thoại thật. | [Báo cáo cá nhân](2A202604108_NguyenNgocBach.md), commit `29dfde1c683eb15fdb7808efcb10cf1ed8995136`. Repo chưa có URL deploy hoặc transcript live để kiểm chứng. |
+| Hà Phan Đại Dương (202604119) | Fork/setup môi trường; phát triển tool `verify` để đối chiếu nguồn và viết unit test cho các tool. | [Báo cáo cá nhân](202604119_HaPhanDaiDuong.md), commit `aa65a034922507f9ef4de6b731b31a74f189ec03`; code/test được dẫn tại B5a. |
+| Trịnh Minh Đức (2A202604078) | Step 1–3: baseline, phân tích lỗi, thử nghiệm prompt/schema v0–v3 và lưu bằng chứng đo. | [Báo cáo cá nhân](2A202604078_TrinhMinhDuc.md), version log, run JSON, snapshot và CSV phân tích được dẫn tại B1. |
 
 ## 7. Hạn chế và hướng cải thiện — B6. Reflection
 
