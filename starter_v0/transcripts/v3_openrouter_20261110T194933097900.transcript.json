@@ -1,0 +1,293 @@
+{
+  "transcript_id": "v3_openrouter_20261110T194933097900",
+  "version": "v3",
+  "artifact_version": "v3+pbb64d58b8fd4+td896dfdf21a1",
+  "prompt_hash": "bb64d58b8fd4e2e392d45afce317a183c0d4414c5d3c26ff270cc3993495f5fd",
+  "tools_hash": "d896dfdf21a1b2d3bc3ceb059200fdef764a982e3daa0e94a3c75b569b483a4b",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/Users/duongha/Documents/GitHub/K5-L3-DAY03-Nhom02-ResearchAgentToolEval/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/duongha/Documents/GitHub/K5-L3-DAY03-Nhom02-ResearchAgentToolEval/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-11-10T19:49:33",
+  "updated_at": "2026-11-10T19:50:45",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-11-10T19:49:35",
+      "user": "Tìm 5 tin tức mới nhất về AI Agents trong 7 ngày gần đây. Với mỗi tin, hãy tóm tắt nội dung chính, ghi rõ nguồn và link bài viết. Sau đó tổng hợp thành một bản tin ngắn.",
+      "status": "answered",
+      "assistant_text": "### Tin tức mới nhất về AI Agents\n\n1. **[Exclusive: Meet \"sovereign agents,\" AI that keeps itself alive](https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat)** - AI agents that pursue their own open-ended survival are an emerging security threat, according to a report from the Center for a New American Security. The length of tasks AI agents can finish on their own has doubled roughly every three and a half months since 2024.\n\n2. **[CrowdStrike Introduces AI Kill Switch](https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch)** - CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform. AI agents are becoming a powerful part of enterprise operations.\n\n3. **[AI agent testing reveals a risky future of 'teamwork' inside companies](https://www.cnbc.com/2026/11/08/ai-agents-risks.html)** - AI agents have been caught circumventing restrictions and communicating through unauthorized channels. Researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that communicate and work toward a common goal.\n\n4. **[Measuring how AI agents handle everyday wet-lab science](https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science)** - The mission is to ensure that artificial general intelligence benefits all of humanity. AI agents need to reliably interpret the experimental evidence scientists work with every day in wet labs.\n\n5. **[These AI agents design your perfect robot-powered lab — and run it for you | Nature](https://www.nature.com/articles/d41586-026-03587-x)** - Laboratory robots have narrow skill sets and limited mobility. AI agents can devise detailed procedures for robotic arms and test them in a virtual laboratory before executing them in real life.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "AI Agents",
+                "topic": "news",
+                "timeframe": "week",
+                "max_results": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "AI Agents",
+                "topic": "news",
+                "timeframe": "week",
+                "max_results": 5
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "AI Agents",
+                "topic": "news",
+                "timeframe": "week",
+                "items": [
+                  {
+                    "title": "Exclusive: Meet \"sovereign agents,\" AI that keeps itself alive",
+                    "url": "https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat",
+                    "source": "axios.com",
+                    "summary": "Photo illustration: Brendan Lynch/Axios. Photo: Carsten Koall/Getty Images\n\nAI agents that pursue their own open-ended survival are an emerging security threat, according to a report first shared with Axios from the Center for a New American Security. [...] The length of tasks AI agents can finish on their own has doubled roughly every three and a half months since 2024, according to testing by the AI evaluator METR.\n   And they're turning to hacking even when no one asks. In the past month alone, it's been revealed that an Anthropic model filed visa applications and sent Philadelphia police a made-up homicide tip, and banks caught agents acting in customer accounts seemingly on their own. [...] Expel CTO Greg Notch called the idea of a malicious AI swarm \"far-fetched.\"\n   Unlike traditional botnets, AI agents need costly computing power, which gives defenders \"a clear leash we've never had on a botnet,\" SANS Institute's Rob T. Lee told Axios.\n\nWhat's next: Existing safeguards \"may still offer partial protection,\" the report says, since frontier AI companies already train their models to refuse hacking.",
+                    "score": 0.7493996
+                  },
+                  {
+                    "title": "CrowdStrike Introduces AI Kill Switch",
+                    "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch",
+                    "source": "crowdstrike.com",
+                    "summary": "Coming soon, CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform.\n\nAI agents operate across endpoints, cloud environments, SaaS applications, browsers, and enterprise identities, often spanning multiple environments in a single chain of activity. When an agent goes rogue, stopping it shouldn't require security teams to investigate and respond separately in every environment. [...] Rather than responding to isolated events through disconnected tools, security teams will be able to coordinate containment across the agentic attack surface.\n\n## Secure AI Adoption Without Losing Control\n\nAI agents are becoming a powerful part of enterprise operations. As their autonomy and reach expand, organizations need security that can keep pace.",
+                    "score": 0.74161834
+                  },
+                  {
+                    "title": "AI agent testing reveals a risky future of 'teamwork' inside companies",
+                    "url": "https://www.cnbc.com/2026/11/08/ai-agents-risks.html",
+                    "source": "cnbc.com",
+                    "summary": "AI agents have been caught circumventing restrictions, communicating through unauthorized channels and pursuing goals in ways their creators did not intend. The most high-profile example emerged last summer when OpenAI disclosed that its models found ways to communicate through improvised channels, bypass internet restrictions and hack into an outside system, Hugging Face. [...] Groups of AI agents often performed worse than their strongest member, even when they knew which agent was the expert. Rather than taking advantage of the expert's knowledge, agents tended to compromise between expert and non-expert opinions. The researchers found that this tendency toward compromise increased with team size and was associated with poorer performance.\n\n\"Collective failures don't necessarily require individual agents to behave badly,\" Cao, one of the study's authors, said. [...] In research published by Anthropic and collaborators, researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that communicate and work toward a common goal. The researchers tested these organizations in simulated business-consulting and software-development settings, and specifically, to assess whether when the agents work as a team they will break rules to reach specified goals.",
+                    "score": 0.73868835
+                  },
+                  {
+                    "title": "Measuring how AI agents handle everyday wet-lab science",
+                    "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+                    "source": "openai.com",
+                    "summary": "Our mission is to ensure that artificial general intelligence benefits all of humanity. As part of that mission, we want to help scientists accelerate biological research—from understanding disease to developing new treatments. For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs, where they run experiments with biological samples. Everyday wet-lab work involves failed experiments, ambiguous images and conflicting",
+                    "score": 0.72605723
+                  },
+                  {
+                    "title": "These AI agents design your perfect robot-powered lab — and run it for you | Nature",
+                    "url": "https://www.nature.com/articles/d41586-026-03587-x",
+                    "source": "nature.com",
+                    "summary": "Laboratory robots are tireless and uncomplaining, but they have narrow skill sets, limited mobility and an inability to get out of each other’s way. Now, a system of artificial-intelligence agents promises to help lab robots do their best work. [...] A general view of a self-building lab with a robotic arm seen slightly off-centre of the image\n\nArtificial-intelligence agents can devise a detailed procedure for a robotic arm and test it in a virtual laboratory.Credit: Jiaru Bai & Yuchi Zhao, University of Toronto [...] In a test, the agents wrote more than 200 commands directing a robotic arm to move between and interact with instruments in an existing lab space. The agent simulated the steps in the virtual lab to ensure that it all worked smoothly, then directed the real-life arm to carry out procedures to measure the optical properties of nanocrystals.",
+                    "score": 0.72418857
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "format",
+              "args": {
+                "items": [
+                  {
+                    "title": "Exclusive: Meet \"sovereign agents,\" AI that keeps itself alive",
+                    "url": "https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat",
+                    "source": "axios.com",
+                    "summary": "AI agents that pursue their own open-ended survival are an emerging security threat, according to a report first shared with Axios from the Center for a New American Security. [...] The length of tasks AI agents can finish on their own has doubled roughly every three and a half months since 2024, according to testing by the AI evaluator METR."
+                  },
+                  {
+                    "title": "CrowdStrike Introduces AI Kill Switch",
+                    "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch",
+                    "source": "crowdstrike.com",
+                    "summary": "Coming soon, CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform. [...] AI agents are becoming a powerful part of enterprise operations."
+                  },
+                  {
+                    "title": "AI agent testing reveals a risky future of 'teamwork' inside companies",
+                    "url": "https://www.cnbc.com/2026/11/08/ai-agents-risks.html",
+                    "source": "cnbc.com",
+                    "summary": "AI agents have been caught circumventing restrictions, communicating through unauthorized channels and pursuing goals in ways their creators did not intend. [...] Researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that communicate and work toward a common goal."
+                  },
+                  {
+                    "title": "Measuring how AI agents handle everyday wet-lab science",
+                    "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+                    "source": "openai.com",
+                    "summary": "Our mission is to ensure that artificial general intelligence benefits all of humanity. [...] For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs."
+                  },
+                  {
+                    "title": "These AI agents design your perfect robot-powered lab — and run it for you | Nature",
+                    "url": "https://www.nature.com/articles/d41586-026-03587-x",
+                    "source": "nature.com",
+                    "summary": "Laboratory robots are tireless and uncomplaining, but they have narrow skill sets, limited mobility and an inability to get out of each other’s way. [...] A general view of a self-building lab with a robotic arm seen slightly off-centre of the image."
+                  }
+                ],
+                "template": "sections",
+                "headline": "Tin tức mới nhất về AI Agents"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "format",
+              "args": {
+                "items": [
+                  {
+                    "title": "Exclusive: Meet \"sovereign agents,\" AI that keeps itself alive",
+                    "url": "https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat",
+                    "source": "axios.com",
+                    "summary": "AI agents that pursue their own open-ended survival are an emerging security threat, according to a report first shared with Axios from the Center for a New American Security. [...] The length of tasks AI agents can finish on their own has doubled roughly every three and a half months since 2024, according to testing by the AI evaluator METR."
+                  },
+                  {
+                    "title": "CrowdStrike Introduces AI Kill Switch",
+                    "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch",
+                    "source": "crowdstrike.com",
+                    "summary": "Coming soon, CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform. [...] AI agents are becoming a powerful part of enterprise operations."
+                  },
+                  {
+                    "title": "AI agent testing reveals a risky future of 'teamwork' inside companies",
+                    "url": "https://www.cnbc.com/2026/11/08/ai-agents-risks.html",
+                    "source": "cnbc.com",
+                    "summary": "AI agents have been caught circumventing restrictions, communicating through unauthorized channels and pursuing goals in ways their creators did not intend. [...] Researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that communicate and work toward a common goal."
+                  },
+                  {
+                    "title": "Measuring how AI agents handle everyday wet-lab science",
+                    "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+                    "source": "openai.com",
+                    "summary": "Our mission is to ensure that artificial general intelligence benefits all of humanity. [...] For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs."
+                  },
+                  {
+                    "title": "These AI agents design your perfect robot-powered lab — and run it for you | Nature",
+                    "url": "https://www.nature.com/articles/d41586-026-03587-x",
+                    "source": "nature.com",
+                    "summary": "Laboratory robots are tireless and uncomplaining, but they have narrow skill sets, limited mobility and an inability to get out of each other’s way. [...] A general view of a self-building lab with a robotic arm seen slightly off-centre of the image."
+                  }
+                ],
+                "template": "sections",
+                "headline": "Tin tức mới nhất về AI Agents"
+              },
+              "result": {
+                "tool": "render_digest",
+                "template": "sections",
+                "markdown": "# Tin tức mới nhất về AI Agents\n\n## Tổng hợp\n- AI agents that pursue their own open-ended survival are an emerging security threat, according to a report first shared with Axios from the Center for a New American Security. [...] The length of tasks AI agents can finish on their own has doubled roughly every three and a hal... - [axios.com](https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat)\n- Coming soon, CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform. [...] AI agents are becoming a powerful part of enterprise operations. - [crowdstrike.com](https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch)\n- AI agents have been caught circumventing restrictions, communicating through unauthorized channels and pursuing goals in ways their creators did not intend. [...] Researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that commun... - [cnbc.com](https://www.cnbc.com/2026/11/08/ai-agents-risks.html)\n- Our mission is to ensure that artificial general intelligence benefits all of humanity. [...] For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs. - [openai.com](https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science)\n- Laboratory robots are tireless and uncomplaining, but they have narrow skill sets, limited mobility and an inability to get out of each other’s way. [...] A general view of a self-building lab with a robotic arm seen slightly off-centre of the image. - [nature.com](https://www.nature.com/articles/d41586-026-03587-x)\n",
+                "item_count": 5
+              }
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "assistant_text": "### Tin tức mới nhất về AI Agents\n\n1. **[Exclusive: Meet \"sovereign agents,\" AI that keeps itself alive](https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat)** - AI agents that pursue their own open-ended survival are an emerging security threat, according to a report from the Center for a New American Security. The length of tasks AI agents can finish on their own has doubled roughly every three and a half months since 2024.\n\n2. **[CrowdStrike Introduces AI Kill Switch](https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch)** - CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform. AI agents are becoming a powerful part of enterprise operations.\n\n3. **[AI agent testing reveals a risky future of 'teamwork' inside companies](https://www.cnbc.com/2026/11/08/ai-agents-risks.html)** - AI agents have been caught circumventing restrictions and communicating through unauthorized channels. Researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that communicate and work toward a common goal.\n\n4. **[Measuring how AI agents handle everyday wet-lab science](https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science)** - The mission is to ensure that artificial general intelligence benefits all of humanity. AI agents need to reliably interpret the experimental evidence scientists work with every day in wet labs.\n\n5. **[These AI agents design your perfect robot-powered lab — and run it for you | Nature](https://www.nature.com/articles/d41586-026-03587-x)** - Laboratory robots have narrow skill sets and limited mobility. AI agents can devise detailed procedures for robotic arms and test them in a virtual laboratory before executing them in real life.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI Agents",
+            "topic": "news",
+            "timeframe": "week",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI Agents",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Exclusive: Meet \"sovereign agents,\" AI that keeps itself alive",
+                "url": "https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat",
+                "source": "axios.com",
+                "summary": "Photo illustration: Brendan Lynch/Axios. Photo: Carsten Koall/Getty Images\n\nAI agents that pursue their own open-ended survival are an emerging security threat, according to a report first shared with Axios from the Center for a New American Security. [...] The length of tasks AI agents can finish on their own has doubled roughly every three and a half months since 2024, according to testing by the AI evaluator METR.\n   And they're turning to hacking even when no one asks. In the past month alone, it's been revealed that an Anthropic model filed visa applications and sent Philadelphia police a made-up homicide tip, and banks caught agents acting in customer accounts seemingly on their own. [...] Expel CTO Greg Notch called the idea of a malicious AI swarm \"far-fetched.\"\n   Unlike traditional botnets, AI agents need costly computing power, which gives defenders \"a clear leash we've never had on a botnet,\" SANS Institute's Rob T. Lee told Axios.\n\nWhat's next: Existing safeguards \"may still offer partial protection,\" the report says, since frontier AI companies already train their models to refuse hacking.",
+                "score": 0.7493996
+              },
+              {
+                "title": "CrowdStrike Introduces AI Kill Switch",
+                "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch",
+                "source": "crowdstrike.com",
+                "summary": "Coming soon, CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform.\n\nAI agents operate across endpoints, cloud environments, SaaS applications, browsers, and enterprise identities, often spanning multiple environments in a single chain of activity. When an agent goes rogue, stopping it shouldn't require security teams to investigate and respond separately in every environment. [...] Rather than responding to isolated events through disconnected tools, security teams will be able to coordinate containment across the agentic attack surface.\n\n## Secure AI Adoption Without Losing Control\n\nAI agents are becoming a powerful part of enterprise operations. As their autonomy and reach expand, organizations need security that can keep pace.",
+                "score": 0.74161834
+              },
+              {
+                "title": "AI agent testing reveals a risky future of 'teamwork' inside companies",
+                "url": "https://www.cnbc.com/2026/11/08/ai-agents-risks.html",
+                "source": "cnbc.com",
+                "summary": "AI agents have been caught circumventing restrictions, communicating through unauthorized channels and pursuing goals in ways their creators did not intend. The most high-profile example emerged last summer when OpenAI disclosed that its models found ways to communicate through improvised channels, bypass internet restrictions and hack into an outside system, Hugging Face. [...] Groups of AI agents often performed worse than their strongest member, even when they knew which agent was the expert. Rather than taking advantage of the expert's knowledge, agents tended to compromise between expert and non-expert opinions. The researchers found that this tendency toward compromise increased with team size and was associated with poorer performance.\n\n\"Collective failures don't necessarily require individual agents to behave badly,\" Cao, one of the study's authors, said. [...] In research published by Anthropic and collaborators, researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that communicate and work toward a common goal. The researchers tested these organizations in simulated business-consulting and software-development settings, and specifically, to assess whether when the agents work as a team they will break rules to reach specified goals.",
+                "score": 0.73868835
+              },
+              {
+                "title": "Measuring how AI agents handle everyday wet-lab science",
+                "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+                "source": "openai.com",
+                "summary": "Our mission is to ensure that artificial general intelligence benefits all of humanity. As part of that mission, we want to help scientists accelerate biological research—from understanding disease to developing new treatments. For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs, where they run experiments with biological samples. Everyday wet-lab work involves failed experiments, ambiguous images and conflicting",
+                "score": 0.72605723
+              },
+              {
+                "title": "These AI agents design your perfect robot-powered lab — and run it for you | Nature",
+                "url": "https://www.nature.com/articles/d41586-026-03587-x",
+                "source": "nature.com",
+                "summary": "Laboratory robots are tireless and uncomplaining, but they have narrow skill sets, limited mobility and an inability to get out of each other’s way. Now, a system of artificial-intelligence agents promises to help lab robots do their best work. [...] A general view of a self-building lab with a robotic arm seen slightly off-centre of the image\n\nArtificial-intelligence agents can devise a detailed procedure for a robotic arm and test it in a virtual laboratory.Credit: Jiaru Bai & Yuchi Zhao, University of Toronto [...] In a test, the agents wrote more than 200 commands directing a robotic arm to move between and interact with instruments in an existing lab space. The agent simulated the steps in the virtual lab to ensure that it all worked smoothly, then directed the real-life arm to carry out procedures to measure the optical properties of nanocrystals.",
+                "score": 0.72418857
+              }
+            ]
+          }
+        },
+        {
+          "tool": "format",
+          "args": {
+            "items": [
+              {
+                "title": "Exclusive: Meet \"sovereign agents,\" AI that keeps itself alive",
+                "url": "https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat",
+                "source": "axios.com",
+                "summary": "AI agents that pursue their own open-ended survival are an emerging security threat, according to a report first shared with Axios from the Center for a New American Security. [...] The length of tasks AI agents can finish on their own has doubled roughly every three and a half months since 2024, according to testing by the AI evaluator METR."
+              },
+              {
+                "title": "CrowdStrike Introduces AI Kill Switch",
+                "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch",
+                "source": "crowdstrike.com",
+                "summary": "Coming soon, CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform. [...] AI agents are becoming a powerful part of enterprise operations."
+              },
+              {
+                "title": "AI agent testing reveals a risky future of 'teamwork' inside companies",
+                "url": "https://www.cnbc.com/2026/11/08/ai-agents-risks.html",
+                "source": "cnbc.com",
+                "summary": "AI agents have been caught circumventing restrictions, communicating through unauthorized channels and pursuing goals in ways their creators did not intend. [...] Researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that communicate and work toward a common goal."
+              },
+              {
+                "title": "Measuring how AI agents handle everyday wet-lab science",
+                "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+                "source": "openai.com",
+                "summary": "Our mission is to ensure that artificial general intelligence benefits all of humanity. [...] For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs."
+              },
+              {
+                "title": "These AI agents design your perfect robot-powered lab — and run it for you | Nature",
+                "url": "https://www.nature.com/articles/d41586-026-03587-x",
+                "source": "nature.com",
+                "summary": "Laboratory robots are tireless and uncomplaining, but they have narrow skill sets, limited mobility and an inability to get out of each other’s way. [...] A general view of a self-building lab with a robotic arm seen slightly off-centre of the image."
+              }
+            ],
+            "template": "sections",
+            "headline": "Tin tức mới nhất về AI Agents"
+          },
+          "result": {
+            "tool": "render_digest",
+            "template": "sections",
+            "markdown": "# Tin tức mới nhất về AI Agents\n\n## Tổng hợp\n- AI agents that pursue their own open-ended survival are an emerging security threat, according to a report first shared with Axios from the Center for a New American Security. [...] The length of tasks AI agents can finish on their own has doubled roughly every three and a hal... - [axios.com](https://www.axios.com/2026/11/03/ai-sovereign-agents-security-threat)\n- Coming soon, CrowdStrike will extend AI Kill Switch beyond gateway enforcement to deliver coordinated agent containment across the Falcon platform. [...] AI agents are becoming a powerful part of enterprise operations. - [crowdstrike.com](https://www.crowdstrike.com/en-us/blog/crowdstrike-introduces-ai-kill-switch)\n- AI agents have been caught circumventing restrictions, communicating through unauthorized channels and pursuing goals in ways their creators did not intend. [...] Researchers describe multi-agent systems as \"AI organizations\" — groups of agents with different roles that commun... - [cnbc.com](https://www.cnbc.com/2026/11/08/ai-agents-risks.html)\n- Our mission is to ensure that artificial general intelligence benefits all of humanity. [...] For AI agents to contribute, they need to reliably interpret the experimental evidence scientists work with every day in wet labs. - [openai.com](https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science)\n- Laboratory robots are tireless and uncomplaining, but they have narrow skill sets, limited mobility and an inability to get out of each other’s way. [...] A general view of a self-building lab with a robotic arm seen slightly off-centre of the image. - [nature.com](https://www.nature.com/articles/d41586-026-03587-x)\n",
+            "item_count": 5
+          }
+        }
+      ],
+      "ended_at": "2026-11-10T19:49:56"
+    }
+  ]
+}
