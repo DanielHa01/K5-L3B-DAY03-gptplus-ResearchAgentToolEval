@@ -123,3 +123,21 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  - name: verify
+    description: "Đối chiếu một nhận định với bằng chứng có trích nguồn đã thu thập bằng lookup/fetch và đánh dấu thông tin mâu thuẫn. Cung cấp trích dẫn chính xác từ các đơn vị xuất bản độc lập cùng nhãn đánh giá do agent xác định sau khi đọc. Tool không tìm kiếm hay tự suy luận bằng chứng ủng hộ hoặc phản bác nhận định. Không dùng để tìm kiếm thông thường hoặc khi chưa đọc bằng chứng. Tên miền khác nhau chỉ là dấu hiệu gần đúng về tính độc lập của nguồn."
+    parameters:
+      type: object
+      properties:
+        claim: {type: string, description: "Một nhận định thực tế cần kiểm chứng, không được để trống"}
+        sources:
+          type: array
+          description: "Bằng chứng từ các đơn vị xuất bản độc lập và loại bỏ bản đăng lại và các đơn vị xuất bản có liên quan"
+          items:
+            type: object
+            properties:
+              url: {type: string, description: "Địa chỉ HTTP(S) của nguồn bằng chứng"}
+              quote: {type: string, description: "Trích dẫn không rỗng đã đọc từ nguồn này, có liên quan đến nhận định"}
+              stance: {type: string, enum: [supports, contradicts, unclear], description: "Đánh giá của agent về trích dẫn đối với nhận định: supports = ủng hộ, contradicts = phản bác, unclear = chưa rõ"}
+            required: [url, quote, stance]
+      required: [claim, sources]
