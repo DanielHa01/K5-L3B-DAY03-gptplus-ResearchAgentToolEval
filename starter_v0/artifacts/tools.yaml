@@ -1,4 +1,4 @@
-# starter_v0 — tool declarations (intentionally vague).
+# starter_v0 — tool declarations.
 # Names and descriptions here are a rough first draft. Routing rules, name->handle
 # mapping, arg conventions (news/timeframe/Top), and the send-confirmation boundary
 # are NOT spelled out anywhere yet. Your job is to make these declarations + the
@@ -16,26 +16,26 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Hỏi người dùng để lấy thông tin còn thiếu hoặc xác nhận một hành động. Dùng response_type=text cho handle/tài khoản hoặc URL còn thiếu; bắt buộc dùng response_type=yes_no để xác nhận trước khi send/post/publish. Không dùng text để xác nhận hành động."
     parameters:
       type: object
       properties:
-        question: {type: string, default: "", description: "Câu hỏi"}
-        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Kiểu trả lời"}
+        question: {type: string, default: "", description: "Câu hỏi cụ thể về thông tin còn thiếu hoặc hành động cần xác nhận"}
+        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "text cho thông tin thiếu; yes_no bắt buộc cho xác nhận hành động gửi/đăng/xuất bản; choice cho lựa chọn hữu hạn"}
         options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn"}
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: "Lấy bài đăng gần đây của một tài khoản cụ thể. Dùng khi người dùng hỏi bài của một người; không dùng cho tìm theo chủ đề. screenname là handle không có ký tự @."
     parameters:
       type: object
       properties:
-        screenname: {type: string, default: "", description: "Tên tài khoản"}
-        limit: {type: integer, default: 5, description: "Số lượng"}
+        screenname: {type: string, default: "", description: "Handle tài khoản, không có @; bắt buộc phải biết rõ, không đoán khi thiếu"}
+        limit: {type: integer, default: 5, description: "Số bài cần lấy"}
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Tìm bài đăng trên mạng xã hội theo chủ đề/từ khóa. Dùng cho cuộc thảo luận về một chủ đề, không dùng cho bài của một tài khoản cụ thể. search_type=Latest hoặc Top."
     parameters:
       type: object
       properties:
@@ -45,22 +45,22 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Tìm kiếm trên web. Dùng cho nghiên cứu web hoặc tin tức; dùng topic=news cho tin tức và topic=general cho thông tin chung. Với tin hôm nay dùng timeframe=day. Giữ query là chủ đề chính, không thêm chữ news vào query nếu topic đã là news."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        topic: {type: string, enum: [general, news], default: "general", description: "Phân loại"}
-        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
+        query: {type: string, default: "", description: "Chủ đề/truy vấn chính, ví dụ AI hoặc OpenAI; không thêm news khi topic=news"}
+        topic: {type: string, enum: [general, news], default: "general", description: "general cho web thông thường; news cho tin tức"}
+        timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "day cho hôm nay/latest, week cho tuần này"}
         max_results: {type: integer, default: 5, description: "Số kết quả"}
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: "Đọc nội dung của đúng URL người dùng cung cấp để tóm tắt/phân tích. Không dùng khi chưa có URL; khi thiếu URL phải dùng clarify."
     parameters:
       type: object
       properties:
-        url: {type: string, default: "", description: "Địa chỉ"}
+        url: {type: string, default: "", description: "URL đầy đủ do người dùng cung cấp; không tự bịa URL"}
       required: [url]
 
   - name: format
@@ -86,21 +86,21 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: "Gửi nội dung ra bên ngoài. Trước khi gọi, phải có một lần clarify với response_type=yes_no và người dùng phải xác nhận rõ. Không gọi send trực tiếp dù người dùng đã yêu cầu gửi; trước tiên luôn hỏi xác nhận. Khi gọi phải đặt confirmed=true."
     parameters:
       type: object
       properties:
         text: {type: string, default: "", description: "Nội dung"}
-        confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
+        confirmed: {type: boolean, default: false, description: "Phải là true chỉ sau xác nhận rõ ràng của người dùng"}
       required: [text]
 
   - name: policy
-    description: "Tìm trong tài liệu nội bộ."
+    description: "Tìm trong company policy nội bộ. Luôn chọn policy_area hẹp nhất: source_citation cho nguồn/chứng cứ/xác minh; ai_research cho research workflow và phương pháp nghiên cứu; data_privacy cho dữ liệu cá nhân; external_publishing cho Telegram/đăng/xuất bản; tool_usage cho quy tắc dùng tool. Chỉ dùng all khi câu hỏi thực sự bao phủ nhiều nhóm hoặc không xác định được nhóm."
     parameters:
       type: object
       properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Nhóm"}
+        query: {type: string, default: "", description: "Truy vấn policy cụ thể"}
+        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Chọn nhóm hẹp nhất: source_citation cho nguồn/chứng cứ/xác minh; ai_research cho research workflow; data_privacy cho riêng tư; external_publishing cho đăng/gửi; tool_usage cho quy tắc tool; all chỉ khi không xác định hoặc nhiều nhóm"}
         top_k: {type: integer, default: 3, description: "Số mục"}
       required: [query]
 
