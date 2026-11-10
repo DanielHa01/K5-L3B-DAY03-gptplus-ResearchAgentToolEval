@@ -10,7 +10,7 @@
 
 - Tên nhóm:
 - Thành viên và phân công: xem [TEAM.md](../../TEAM.md)
-- Provider/model dùng cho v0–v3:
+- Provider/model dùng cho v0–v3: OpenRouter / `openai/gpt-4o-mini`.
 
 ## 2. Mục tiêu và cách tiếp cận — PHẦN A: Giới thiệu agent
 
@@ -52,7 +52,9 @@ Ví dụ: "Research agent: tìm tin theo từ khóa / theo tài khoản, đọc 
 
 > Tóm tắt các thay đổi chính trong `starter_v0/artifacts/system_prompt.md` và `starter_v0/artifacts/tools.yaml`, và tool mới nhóm viết (tên, làm gì, khi nào agent nên gọi).
 
--
+- **v1 — Hỏi lại khi thiếu dữ liệu:** thay riêng đoạn prompt yêu cầu đoán tài khoản/URL bằng quy tắc gọi `clarify(response_type="text")`, chờ người dùng bổ sung và giữ ngữ cảnh các lượt trước.
+- **v2 — Truyền rõ kiểu câu hỏi:** thêm `response_type` vào danh sách `required` của schema `clarify`. Implementation của tool và nội dung eval giữ nguyên.
+- **v3 — Xác nhận trước khi gửi:** thay riêng đoạn prompt yêu cầu gửi ngay bằng quy tắc hỏi `clarify(response_type="yes_no")`, chờ xác nhận nội dung/đích gửi và chỉ gọi `send(confirmed=true)` khi đủ điều kiện. Lần đo v3 giảm điểm; kết quả và lỗi phát sinh được ghi ở B1.
 
 ## 4. Kết quả — PHẦN B: Chi tiết và bằng chứng
 
@@ -62,10 +64,25 @@ Lấy từ `starter_v0/artifacts/version_log.csv` và `starter_v0/runs/*.json`. 
 
 | Version | Changed Artifact | Hypothesis | Metric Before | Metric After | Run File |
 |---|---|---|---:|---:|---|
-| v0 | baseline |  |  |  |  |
-| v1 |  |  |  |  |  |
-| v2 |  |  |  |  |  |
-| v3 |  |  |  |  |  |
+| v0 | baseline | Đo starter nguyên bản trước khi sửa | — | 65% | [Run v0](../../starter_v0/runs/v0_B_base_openrouter_20261110T173956757517.json) |
+| v1 | `system_prompt.md` | Yêu cầu hỏi lại khi thiếu đầu vào sẽ tránh đoán tài khoản/URL, giữ ngữ cảnh đa lượt | 65% | 90% | [Run v1](../../starter_v0/runs/v1_B_base_openrouter_20261110T175728553731.json) |
+| v2 | `tools.yaml` | Bắt buộc `response_type` trong schema sẽ tránh model bỏ sót kiểu câu hỏi | 90% | 95% | [Run v2](../../starter_v0/runs/v2_B_base_openrouter_20261110T180649154815.json) |
+| v3 | `system_prompt.md` | Quy tắc hỏi xác nhận `yes_no` trước khi gửi sẽ sửa R12 và giữ hành vi các yêu cầu đọc | 95% | 85% | [Run v3](../../starter_v0/runs/v3_B_base_openrouter_20261110T180928571868.json) |
+
+Metric trước/sau trong bảng và `version_log.csv` là `summary.case_accuracy`. Cả 4 run đều đo đủ 20/20 case, `provider_error_cases=0`, cùng provider/model; các input/expect của bộ base không thay đổi.
+
+| Version | Case accuracy | Tool routing | Argument accuracy | Multi-turn accuracy |
+|---|---:|---:|---:|---:|
+| v0 | 65% | 75% | 65% | 100% |
+| v1 | 90% | 100% | 90% | 100% |
+| v2 | 95% | 100% | 95% | 100% |
+| v3 | 85% | 95% | 85% | 83.33% |
+
+- **v2:** R11 đã truyền `response_type="text"`; cả 18 case từng pass ở v1 đều tiếp tục pass.
+- **v3:** giả thuyết chưa được ủng hộ trong lần đo này. R12 vẫn hỏi bổ sung nội dung/đích gửi bằng `text`; R13 thiếu `topic="news"`; M02 chuyển sang `social_search` thay vì `lookup`. Hai case cuối từng pass ở v2.
+- **Phạm vi kết luận:** v2 có điểm cao nhất trong các lần đo hiện có. Kết quả base đo routing/args; luồng xác nhận và gửi thật cần transcript live để đánh giá tiếp.
+
+Hash và đường dẫn run: [version log](../../starter_v0/artifacts/version_log.csv). Bản prompt/tools cố định của từng version, cách chạy lại và phân tích chi tiết: [tổng kết Step 3](../../starter_v0/analysis/step3_summary.md). Bảng phân tích có 80 dòng: [CSV v0–v3](../../starter_v0/analysis/step3_v0_v3.csv). Unit test sau thay đổi: **62 passed, 17 skipped, 0 failed**; 17 skip là stub CP3 có sẵn, xem [output pytest](../../starter_v0/analysis/step3_pytest.txt).
 
 ### B2. Failure Analysis
 
